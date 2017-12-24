@@ -1,3 +1,3 @@
 # ChristmasHat
-run
-```python christ.py ```
+* run
+$ ```python christ.py ```
