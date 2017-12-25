@@ -6,7 +6,7 @@ hat_img = cv2.imread("img/hat_img.png")
 img = cv2.imread("img/1.jpg")
 
 print ("#hat_img: imgShape: %s; imgSize: %s; DataType:%s" %(hat_img.shape, hat_img.size, hat_img.dtype))
-print "#figure_img"
+print ("#figure_img imgShape: %s; imgSize: %s; DataType:%s" %(img.shape, img.size, img.dtype))
 
 #split the channel of the hat img
 r, g, b = cv2.split(hat_img)
