@@ -1,7 +1,7 @@
 # ChristmasHat
 
 需要安装
-* opencv-python
+* opencv-python
 * dlib
 * 安装dlib之前，先安装cmake, boost, boost-python
 
