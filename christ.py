@@ -4,7 +4,6 @@ import cv2
 #get the image needed
 hat_img = cv2.imread("img/hat_img.png")
 img = cv2.imread("img/1.jpg")
-
 print ("#hat_img: imgShape: %s; imgSize: %s; DataType:%s" %(hat_img.shape, hat_img.size, hat_img.dtype))
 print ("#figure_img imgShape: %s; imgSize: %s; DataType:%s" %(img.shape, img.size, img.dtype))
 
@@ -94,6 +93,4 @@ cv2.imshow("add_hat", add_hat)
 img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+resized_hat_w//3*2)] = add_hat
 
 cv2.imshow("image", img)
-cv2.imwrite('myChristmasHatPage.png',img)
-cv2.waitKey(1)
-
+cv2.imwrite('myChristmasHatPage.png', img)
