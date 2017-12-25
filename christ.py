@@ -1,5 +1,6 @@
 import dlib
 import cv2
+import time
 
 #get the image needed
 hat_img = cv2.imread("img/hat_img.png")
@@ -94,3 +95,4 @@ img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+re
 
 cv2.imshow("image", img)
 cv2.imwrite('myChristmasHatPage.png', img)
+cv2.waitKey()
