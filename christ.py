@@ -8,13 +8,13 @@ r,g,b = cv2.split(hat_img)
 rgb_hat = cv2.merge((r,g,b))
 cv2.imwrite("img/hat_alpha.jpg", r)
 
-predictor_path = "shape_predictor_5_face_landmarks.dat"
-predictor = dlib.shape_predictor(predictor_path) 
-detector = dlib.get_frontal_face_detector() 
-dets = detector(img, 1) 
+predictor_path = "model/shape_predictor_5_face_landmarks.dat"
+predictor = dlib.shape_predictor(predictor_path)
+detector = dlib.get_frontal_face_detector()
+dets = detector(img, 1)
 
 
-if len(dets)>0: 
+if len(dets)>0:
     for d in dets:
         x,y,w,h = d.left(), d.top(), d.right()-d.left(), d.bottom()-d.top() 
         # x,y,w,h = faceRect 
@@ -24,7 +24,6 @@ if len(dets)>0:
             print "length of face points"
             print len(shape.parts())
             cv2.circle(img, (point.x, point.y), 3, color=(255, 0, 0)) 
-
 
 # pick the lefteye point and the righteye point
 point1 = shape.part(0)
@@ -62,7 +61,6 @@ bg_roi = bg_roi.astype(float)
 mask_inv = cv2.merge((mask_inv, mask_inv,mask_inv))
 alpha = mask_inv.astype(float)/255 
 
-print "K"
 alpha = cv2.resize(alpha, (bg_roi.shape[1], bg_roi.shape[0])) 
 print("alpha size: ", alpha.shape)
 print("bg_roi size: ", bg_roi.shape)
@@ -75,6 +73,7 @@ hat = cv2.resize(hat,(bg_roi.shape[1],bg_roi.shape[0]))
 # 2 ROI zone plus
 add_hat = cv2.add(bg,hat) 
 cv2.imshow("add_hat",add_hat) 
+
 # 
 img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+resized_hat_w//3*2)] = add_hat
 cv2.imshow("image", img)
