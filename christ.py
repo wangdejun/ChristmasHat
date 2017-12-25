@@ -43,6 +43,9 @@ if len(dets)>0:
         # cv2.imshow("image",img)
         # cv2.waitKey()
 
+
+# Step3: Calculate the points that the hat should pin on
+# --------------------------------------------------------------
 # pick the left eye point and the right eye point
 point1 = shape.part(0)
 point2 = shape.part(2)
@@ -85,6 +88,9 @@ hat = cv2.resize(hat,(bg_roi.shape[1], bg_roi.shape[0]))
 # 2 ROI zone plus
 add_hat = cv2.add(bg, hat) 
 cv2.imshow("add_hat", add_hat)
+
+# Step4: Save the Result Image and Show it!
+# --------------------------------------------------------------
 
 # put the zone to the origin photo
 img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+resized_hat_w//3*2)] = add_hat
