@@ -1,6 +1,5 @@
 import dlib
 import cv2
-import time
 
 #get the image needed
 hat_img = cv2.imread("img/hat_img.png")
