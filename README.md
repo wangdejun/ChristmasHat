@@ -13,6 +13,6 @@ brew install boost-python
 pip install dlib
 ```
 
-* 运行下面的命令：
+* 运行下面的命令:
 
 * $ ```python christ.py ```

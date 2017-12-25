@@ -1,19 +1,23 @@
 import dlib
 import cv2
 
+# Step 1: get the img (use API providec by Open-cv)
+# --------------------------------------------------------------
 #get the image needed
-hat_img = cv2.imread("img/hat_img.png")
+hat_img = cv2.imread("img/hat_img.png",-1)
 img = cv2.imread("img/1.jpg")
 print ("#hat_img: imgShape: %s; imgSize: %s; DataType:%s" %(hat_img.shape, hat_img.size, hat_img.dtype))
 print ("#figure_img imgShape: %s; imgSize: %s; DataType:%s" %(img.shape, img.size, img.dtype))
 
 #split the channel of the hat img
-r, g, b = cv2.split(hat_img)
+r, g, b, a = cv2.split(hat_img)
 rgb_hat = cv2.merge((r, g, b))
 
 # can't split the alpha channel, replace it with red channel.
 cv2.imwrite("img/hat_alpha.jpg", r)
 
+# Step2: use the Model to detect 
+# --------------------------------------------------------------
 # human face keypoint detector
 predictor_path = "model/shape_predictor_5_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_path)
@@ -39,16 +43,12 @@ if len(dets)>0:
         # cv2.imshow("image",img)
         # cv2.waitKey()
 
-
 # pick the left eye point and the right eye point
 point1 = shape.part(0)
 point2 = shape.part(2)
 
 # calculate the middle point
 eyes_center = ((point1.x+point2.x)/2, (point1.y+point2.y)/2)
-# cv2.circle(img,eyes_center,3,color=(0,255,0))
-# cv2.imshow("image",img)
-# cv2.waitKey()
 
 # adjust the hat size to the face size
 factor = 1.5
@@ -68,17 +68,14 @@ mask_inv = cv2.bitwise_not(mask)
 dh = 0
 dw = 0
 
-# bg_roi = img[y+dh-resized_hat_h:y+dh, x+dw:x+dw+resized_hat_w] 
 bg_roi = img[y+dh-resized_hat_h:y+dh, (eyes_center[0]-resized_hat_w//3):(eyes_center[0] + resized_hat_w//3*2)] 
 
 # extract the zone from Origin image ROI 
 bg_roi = bg_roi.astype(float)
 mask_inv = cv2.merge((mask_inv, mask_inv,mask_inv))
-alpha = mask_inv.astype(float)/255 
+alpha = mask_inv.astype(float)/255
 
-alpha = cv2.resize(alpha, (bg_roi.shape[1], bg_roi.shape[0])) 
-# print("alpha size: ", alpha.shape)
-# print("bg_roi size: ", bg_roi.shape)
+alpha = cv2.resize(alpha, (bg_roi.shape[1], bg_roi.shape[0]))
 bg = cv2.multiply(alpha, bg_roi)
 bg = bg.astype('uint8')
 
@@ -94,4 +91,4 @@ img[y+dh-resized_hat_h:y+dh,(eyes_center[0]-resized_hat_w//3):(eyes_center[0]+re
 
 cv2.imshow("image", img)
 cv2.imwrite('myChristmasHatPage.png', img)
-cv2.waitKey()
+cv2.waitKey(10000)
