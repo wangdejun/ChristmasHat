@@ -1,4 +1,3 @@
-import numpy as np
 import dlib
 import cv2
 
@@ -35,15 +34,15 @@ point2 = shape.part(2)
 
 # calculate the middle point
 eyes_center = ((point1.x+point2.x)/2, (point1.y+point2.y)/2)
-cv2.circle(img,eyes_center,3,color=(0,255,0)) 
+cv2.circle(img,eyes_center,3,color=(0,255,0))
 
 # adjust the hat size to the face size
-factor = 1.5 
+factor = 1.5
 resized_hat_h = int(round(rgb_hat.shape[0]*w/rgb_hat.shape[1]*factor))
 resized_hat_w = int(round(rgb_hat.shape[1]*w/rgb_hat.shape[1]*factor))
 
 if resized_hat_h > y:
-    resized_hat_h = y-1 
+    resized_hat_h = y-1
     print "resized_hat_h"
 
 # adjust the hat size to the face size
@@ -52,8 +51,8 @@ resized_hat = cv2.resize(rgb_hat, (resized_hat_w, resized_hat_h))
 mask = cv2.resize(r,(resized_hat_w,resized_hat_h))
 mask_inv = cv2.bitwise_not(mask)
 
-dh = 0 
-dw = 0 
+dh = 0
+dw = 0
 
 bg_roi = img[y+dh-resized_hat_h:y+dh, x+dw:x+dw+resized_hat_w] 
 bg_roi = img[y+dh-resized_hat_h:y+dh, (eyes_center[0]-resized_hat_w//3):(eyes_center[0] + resized_hat_w//3*2)] 
