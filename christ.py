@@ -2,12 +2,12 @@ import numpy as np
 import dlib
 import cv2
 
-hat_img = cv2.imread("hat_img.png")
-img = cv2.imread("Torres.jpg")
+hat_img = cv2.imread("img/hat_img.png")
+img = cv2.imread("img/Torres.jpg")
 
 r,g,b = cv2.split(hat_img)
 rgb_hat = cv2.merge((r,g,b))
-cv2.imwrite("hat_alpha.jpg", r)
+cv2.imwrite("img/hat_alpha.jpg", r)
 
 predictor_path = "shape_predictor_5_face_landmarks.dat"
 predictor = dlib.shape_predictor(predictor_path) 
